@@ -32,7 +32,7 @@ router.get('/:id', async function (req, res, next) {
 router.post('/', async function (req, res, next) {
   try {
     const validation = jsonschema.validate(req.body, newBookSchema)
-    if (!validation) {
+    if (validation.errors.length > 0) {
       return next({
         status: 400,
         error: validation.errors.map((e) => e.stack),
@@ -56,6 +56,12 @@ router.put('/:isbn', async function (req, res, next) {
       })
     }
     const validation = jsonschema.validate(req.body, updateBookSchema)
+    if (!validation.valid) {
+      return next({
+        status: 400,
+        errors: validation.errors.map((e) => e.stack),
+      })
+    }
     const book = await Book.update(req.params.isbn, req.body)
     return res.json({ book })
   } catch (err) {

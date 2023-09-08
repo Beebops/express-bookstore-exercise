@@ -14,7 +14,7 @@
     "jsonschema": "^1.4.1",
     "locus": "^2.0.1",
     "pg": "^8.11.3",
-    "supertest": "^3.3.0"
+    "supertest": "^3.4.2"
   },
   "description": ""
 }
